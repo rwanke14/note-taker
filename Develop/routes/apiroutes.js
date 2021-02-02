@@ -16,7 +16,7 @@ module.exports = (app) => {
 
     app.get('api/notes', (req, res) => {
 
-        
+        fs.readFile(get)
         res.json(getData)
 
     })

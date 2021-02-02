@@ -19,6 +19,7 @@
   "homepage": "https://github.com/rwanke14/note-taker#readme",
   "dependencies": {
     "express": "^4.17.1",
-    "jsonfile": "^6.1.0"
+    "jsonfile": "^6.1.0",
+    "uniqid": "^5.2.0"
   }
 }

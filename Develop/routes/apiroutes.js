@@ -1,23 +1,22 @@
 const dbData = require('../db/db.json');
 const path = require('path');
 const fs = require('fs')
-
-
+var uniqid = require('uniqid');
 
 module.exports = (app) => {
 
-    let id
+    let id;
 
-    let getData = fs.readFileSync(path.join(__dirname, '../db/db.json'), (err, data) => {
-        if (err) throw err;
-    });
     const addNote = [];
 
+    app.get('/api/notes', (req, res) => {
 
-    app.get('api/notes', (req, res) => {
+        //fs.readFile(get)
+        fs.readFile('./Develop/db/db.json', (err, data) => {
+            if (err) throw err;
+        res.send(data)
 
-        fs.readFile(get)
-        res.json(getData)
+        });
 
     })
 
@@ -40,14 +39,33 @@ module.exports = (app) => {
     // });
 
     //posting to api route
-    app.post('api/notes', (req, res) => {
+    app.post('/api/notes', (req, res) => {
 
-        dbData.push(req.body)
+        console.log(req.body)
+        let newNotes = {
+            title: req.body.title,
+            text: req.body.text, 
+            id: uniqid()
+        }
+
+        fs.readFile('./Develop/db/db.json', (err, data) => {
+            if (err) throw err;
+            const parsedData = JSON.parse(data)
+            parsedData.push(newNotes);
+            
+            fs.writeFile('./Develop/db/db.json', JSON.stringify(parsedData), (err) => {
+                if (err) throw err;
+                console.log('The file has been saved!');
+                res.send(dbData)
+              });
+
+
+        });
 
 
     });
 
-    app.delete('api/notes/:id', (req, res) => {
+    app.delete('/api/notes/:id', (req, res) => {
 
 
         //delete notes when trash can icon is clicked.

@@ -6,6 +6,8 @@ const uniqid = require('uniqid');
 
 module.exports = (app) => {
 
+    let addNote = [];
+
     //Gets the note information
     app.get('/api/notes', (req, res) => {
 
@@ -32,11 +34,11 @@ module.exports = (app) => {
         //reads json file and pushes new object into array.
         fs.readFile('./Develop/db/db.json', (err, data) => {
             if (err) throw err;
-            const parsedData = JSON.parse(data)
-            parsedData.push(newNotes);
+            addNote = JSON.parse(data)
+            addNote.push(newNotes);
 
             //Writes new object into json file and sends back to user.
-            fs.writeFile('./Develop/db/db.json', JSON.stringify(parsedData), (err) => {
+            fs.writeFile('./Develop/db/db.json', JSON.stringify(addNote), (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
                 res.json(dbData)
@@ -57,15 +59,15 @@ module.exports = (app) => {
         console.log(removeNote)
 
 
-        for (let i = 0; i < dbData.length; i++){
+        for (let i = 0; i < addNote.length; i++){
 
-            if (dbData[i].id === removeNote){
-                dbData.splice(i, 1);
+            if (addNote[i].id === removeNote){
+                addNote.splice(i, 1);
             }
 
         }
 
-        fs.writeFile('./Develop/db/db.json', JSON.stringify(dbData), (err) => {
+        fs.writeFile('./Develop/db/db.json', JSON.stringify(addNote), (err) => {
             if (err) throw err;
             console.log('The file has been deleted!');
 

@@ -21,5 +21,6 @@
     "express": "^4.17.1",
     "jsonfile": "^6.1.0",
     "uniqid": "^5.2.0"
-  }
+  },
+  "devDependencies": {}
 }

@@ -39,7 +39,7 @@ module.exports = (app) => {
             fs.writeFile('./Develop/db/db.json', JSON.stringify(parsedData), (err) => {
                 if (err) throw err;
                 console.log('The file has been saved!');
-                res.send(dbData)
+                res.json(dbData)
             });
 
 
@@ -48,27 +48,31 @@ module.exports = (app) => {
 
     });
 
+
     //Deleting note at users request. Identified by it's unique ID. 
     app.delete('/api/notes/:id', (req, res) => {
 
-       //declaring variable for when user selects an id with their request.
-        let id = req.params.id
-        console.log(id)
+        //declaring variable for when user selects an id with their request.
+        let removeNote = req.params.id
+        console.log(removeNote)
 
 
-        //using .pop() instead of .splice() since this could be a large array and it's easier to remove with .pop()
-        
-        dbData.pop(id)
+        for (let i = 0; i < dbData.length; i++){
 
-        //Writing the update to the json file to change the array.
+            if (dbData[i].id === removeNote){
+                dbData.splice(i, 1);
+            }
+
+        }
+
         fs.writeFile('./Develop/db/db.json', JSON.stringify(dbData), (err) => {
             if (err) throw err;
             console.log('The file has been deleted!');
 
         });
 
-        //Sending updated array back to user.
         res.send(dbData);
+        //Sending updated array back to user.
 
     });
 

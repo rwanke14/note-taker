@@ -7,7 +7,7 @@ The application uses node.js with express for setting up the ports and uniqID to
 
 ## Links:
 
-Link to live application: https://git.heroku.com/note-taker1029.git
+Link to live application: https://note-taker1029.herokuapp.com/
 
 Link to github repository: https://github.com/rwanke14/note-taker
 

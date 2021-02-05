@@ -28,7 +28,7 @@ module.exports = (app) => {
     //Adding notes to array.
     app.post('/api/notes', (req, res) => {
 
-        
+
         //Setting up object to be inserted into the array in the json file.
         let newNotes = {
             title: req.body.title,

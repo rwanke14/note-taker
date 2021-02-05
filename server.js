@@ -20,5 +20,5 @@ require('./Develop/routes/htmlroutes')(app);
 //opens port and lets user know it's open. 
 
 app.listen(PORT, () => {
-    console.log(`App listening on PORT: ${PORT}`);
-  });
+  console.log(`App listening on PORT: ${PORT}`);
+});

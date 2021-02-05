@@ -1,11 +1,15 @@
 const dbData = require('../db/db.json');
 const path = require('path');
 const fs = require('fs')
+
+//Using uniqid to add unique identifier to ID with notes. 
+
 const uniqid = require('uniqid');
 
 
 module.exports = (app) => {
 
+    //empty array to add and remove notes object data from the api array.
     let addNote = [];
 
     //Gets the note information
@@ -24,14 +28,14 @@ module.exports = (app) => {
     //Adding notes to array.
     app.post('/api/notes', (req, res) => {
 
-        console.log(req.body)
+        
         //Setting up object to be inserted into the array in the json file.
         let newNotes = {
             title: req.body.title,
             text: req.body.text,
             id: uniqid()
         }
-        //reads json file and pushes new object into array.
+        //reads json file and pushes new object into the empty array addNote.
         fs.readFile('./Develop/db/db.json', (err, data) => {
             if (err) throw err;
             addNote = JSON.parse(data)
@@ -58,23 +62,25 @@ module.exports = (app) => {
         let removeNote = req.params.id
         console.log(removeNote)
 
+        //establishing a for loop for removing a note when deleted using splice with the addNote array.
+        for (let i = 0; i < addNote.length; i++) {
 
-        for (let i = 0; i < addNote.length; i++){
-
-            if (addNote[i].id === removeNote){
+            if (addNote[i].id === removeNote) {
                 addNote.splice(i, 1);
             }
 
         }
 
+        //writing the update to the db.json file so it communicates to front end that the note is removed. 
         fs.writeFile('./Develop/db/db.json', JSON.stringify(addNote), (err) => {
             if (err) throw err;
             console.log('The file has been deleted!');
 
         });
 
-        res.send(dbData);
         //Sending updated array back to user.
+        res.send(dbData);
+
 
     });
 
